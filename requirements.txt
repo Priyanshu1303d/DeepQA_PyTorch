@@ -1,0 +1,21 @@
+torch
+torchvision
+torchaudio
+transformers
+datasets
+tokenizers
+numpy
+pandas
+scikit-learn
+nltk
+spacy
+tqdm
+mlflow
+optuna
+dvc
+dvc-gdrive
+docker
+uvicorn
+fastapi
+streamlit
+-e .
