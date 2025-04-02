@@ -6,3 +6,13 @@ data_ingestion:
   source_url: "https://drive.google.com/drive/folders/1sIfBl1cJbuqqsWQnRvlqNqGX6i-9xst3?usp=sharing"
   local_data_file : artifacts/data_ingestion/100_Unique_QA_Dataset.zip
   unzip_dir : artifacts/data_ingestion
+
+
+data_validation:
+  root_dir: artifacts/data_validation
+  STATUS_FILE: artifacts/data_validation/status.txt
+  ALL_REQUIRED_FILES: ["100_Unique_QA_Dataset.csv"]
+
+data_transformation:
+  root_dir : artifacts/data_transformation
+  
