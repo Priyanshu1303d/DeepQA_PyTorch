@@ -24,3 +24,14 @@ model_trainer:
   data_path : artifacts/data_transformation/Preprocessed_Data/preprocessed_data.csv
   vocab_file_path: artifacts/data_transformation/Vocab/vocab.json
   output_path : artifacts/model_trainer
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  saved_model_path: artifacts/model_trainer/qa_rnn.pth
+  model_metrics_json: artifacts/model_evaluation
+  data_path : artifacts/data_transformation/Preprocessed_Data/preprocessed_data.csv
+  vocab_file_path: artifacts/data_transformation/Vocab/vocab.json
+
+model_prediction:
+  saved_model_path : artifacts/model_trainer/qa_rnn.pth
+  vocab_file_path: artifacts/data_transformation/Vocab/vocab.json
