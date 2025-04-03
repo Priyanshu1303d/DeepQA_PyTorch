@@ -15,4 +15,12 @@ data_validation:
 
 data_transformation:
   root_dir : artifacts/data_transformation
+  data_path : artifacts/data_ingestion/Dataset/100_Unique_QA_Dataset.csv
+  vocab_file_path: artifacts/data_transformation/Vocab
+  output_dir : artifacts/data_transformation/Preprocessed_Data
   
+model_trainer:
+  root_dir : artifacts/model_trainer
+  data_path : artifacts/data_transformation/Preprocessed_Data/preprocessed_data.csv
+  vocab_file_path: artifacts/data_transformation/Vocab/vocab.json
+  output_path : artifacts/model_trainer
