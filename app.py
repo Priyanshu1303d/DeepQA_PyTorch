@@ -1,8 +1,11 @@
 import streamlit as st
 import torch
+
+import sys
+import os
+sys.path.append(os.path.abspath("src"))
 from DeepQA.config.configuration import ConfigurationManager
 from DeepQA.Components.Stage_06_Model_Prediction import Predictor
-
 # ----------------------------------------
 # 🔧 App config
 # ----------------------------------------

@@ -1,7 +1,7 @@
 
 from DeepQA.logging import logger
 from DeepQA.utils.common import read_yaml , create_directories , get_size
-from DeepQA.constants import *
+from DeepQA.constants import (CONFIG_FILE_PATH , PARAMS_FILE_PATH)
 from DeepQA.entity.entity_config import (DataIngestionConfig , DataValidationConfig , DataTransformationConfig ,
                                           ModelTrainerConfig, ModelPredictionConfig , ModelEvaluationConfig)
 
