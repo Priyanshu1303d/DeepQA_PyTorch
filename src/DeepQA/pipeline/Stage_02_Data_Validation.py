@@ -1,8 +1,9 @@
-from src.DeepQA.logging import logger
-from DeepQA.config.configuration import ConfigurationManager
 from DeepQA.Components.Stage_02_Data_Validation import DataValidation
+from DeepQA.config.configuration import ConfigurationManager
+from src.DeepQA.logging import logger
 
 STAGE_NAME = "Data Validation stage"
+
 
 class DataValidationPipeline:
     def __init__(self):
@@ -14,6 +15,7 @@ class DataValidationPipeline:
 
         data_validation = DataValidation(data_validation_config)
         data_validation.validate_all_files_exist()
+
 
 if __name__ == "__main__":
     try:

@@ -1,16 +1,19 @@
-import torch 
-from torch.utils.data import Dataset , DataLoader
 import ast
-import torch.nn as nn
-import torch.optim as optim
 import json
-import pandas as pd
-from DeepQA.logging import logger
-from DeepQA.config.configuration import ModelTrainerConfig
 from pathlib import Path
 
+import pandas as pd
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, Dataset
+
+from DeepQA.config.configuration import ModelTrainerConfig
+from DeepQA.logging import logger
+
+
 class QA_Dataclass(Dataset):
-    def __init__(self , df , vocab):
+    def __init__(self, df, vocab):
         self.df = df
         self.vocab = vocab
 
@@ -19,57 +22,54 @@ class QA_Dataclass(Dataset):
 
     def __getitem__(self, index):
         # Convert string representations of lists back to actual lists
-        numerical_question = ast.literal_eval(self.df.iloc[index]['question_indices'])
-        numerical_answer = ast.literal_eval(self.df.iloc[index]['answer_indices'])
+        numerical_question = ast.literal_eval(self.df.iloc[index]["question_indices"])
+        numerical_answer = ast.literal_eval(self.df.iloc[index]["answer_indices"])
 
         # Convert to PyTorch tensors
-        question_tensor = torch.tensor(numerical_question, dtype=torch.long).unsqueeze(0)  # Add batch dimension
+        question_tensor = torch.tensor(numerical_question, dtype=torch.long).unsqueeze(
+            0
+        )  # Add batch dimension
         answer_tensor = torch.tensor(numerical_answer, dtype=torch.long)
 
         return question_tensor, answer_tensor
-    
 
 
-    
 class ModelTrainer:
-    def __init__(self , config : ModelTrainerConfig ):
+    def __init__(self, config: ModelTrainerConfig):
         super().__init__()
 
         self.config = config
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        with open(config.vocab_file_path, 'r') as f:
+        with open(config.vocab_file_path, "r") as f:
             vocab = json.load(f)
         self.vocab_size = len(vocab)
 
-        #model creation
-        self.model = self._build_model(self.vocab_size ).to(self.device)
+        # model creation
+        self.model = self._build_model(self.vocab_size).to(self.device)
 
-        #model save path 
+        # model save path
         self.output_path = Path(config.output_path)
 
-        #params init
+        # params init
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.Adam(self.model.parameters(), lr=config.learning_rate)
 
     def create_dataset(self):
         """Creates the dataset required for the DataLoader"""
         self.df_path = Path(self.config.data_path)
-        self.vocab_path = Path(self.config.vocab_file_path)  #convert it into Path
+        self.vocab_path = Path(self.config.vocab_file_path)  # convert it into Path
         df = pd.read_csv(self.df_path)
         with open(self.vocab_path, "r") as f:
             self.vocab = json.load(f)
 
-        self.dataset = QA_Dataclass(df , self.vocab)
+        self.dataset = QA_Dataclass(df, self.vocab)
 
         return self.dataset
 
-
-
-    def _build_model(self , vocab_size):
+    def _build_model(self, vocab_size):
         """Builds and returns the model"""
         return RNNModel(vocab_size, embedding_dim=50, hidden_size=64)
-
 
     def train(self, train_loader):
         """Train the model using the given dataloader."""
@@ -111,7 +111,6 @@ class ModelTrainer:
 
         logger.info(f"✅ Model saved at {model_path}")
 
-
     def evaluate(self, val_loader):
         """Evaluate the model on validation data."""
         self.model.eval()  # Set model to evaluation mode
@@ -124,7 +123,7 @@ class ModelTrainer:
                 # Forward pass
                 output = self.model(question)
                 loss = self.criterion(output, answer.squeeze(1))
-                
+
                 total_loss += loss.item()
 
         avg_loss = total_loss / len(val_loader)
@@ -139,16 +138,17 @@ class RNNModel(nn.Module):
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.rnn = nn.RNN(embedding_dim, hidden_size, batch_first=True)
         self.fc = nn.Linear(hidden_size, vocab_size)
-    
+
     def forward(self, x):
-        x = self.embedding(x) 
+        x = self.embedding(x)
 
         # 🚨 Fix: Remove the extra dimension if needed
-        if x.dim() == 4:  
-            x = x.squeeze(1)  # Remove the unnecessary 1-dim (batch_size, 1, seq_len, embedding_dim) → (batch_size, seq_len, embedding_dim)
-        
+        if x.dim() == 4:
+            x = x.squeeze(
+                1
+            )  # Remove the unnecessary 1-dim (batch_size, 1, seq_len, embedding_dim) → (batch_size, seq_len, embedding_dim)
+
         output, hidden = self.rnn(x)  # Pass through RNN
         output = self.fc(output[:, -1, :])  # Take the last output for classification
 
         return output
-

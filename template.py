@@ -1,11 +1,10 @@
-import os 
-import logging 
+import logging
+import os
 from pathlib import Path
 
+project_name = "DeepQA"
 
-project_name = 'DeepQA'
-
-logging.basicConfig(level = logging.INFO , format="[%(asctime)s] : %(message)s")
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s] : %(message)s")
 
 list_of_files = [
     "config/config.yaml",
@@ -25,21 +24,21 @@ list_of_files = [
     "app.py",
     ".github/workflows/.gitkeep",
     "DockerFile",
-    "dvc.yaml"
+    "dvc.yaml",
 ]
 
 
 for file in list_of_files:
     filepath = Path(file)
 
-    file_dir , file_name = os.path.split(filepath)
+    file_dir, file_name = os.path.split(filepath)
 
     if file_dir != "":
-        os.makedirs(file_dir , exist_ok=True)
+        os.makedirs(file_dir, exist_ok=True)
         logging.info(f"Created the directory: {file_dir} for the file : {file_name}")
 
     if (not os.path.exists(filepath)) or (os.path.getsize(filepath) == 0):
-        with open(filepath , "w") as f:
+        with open(filepath, "w") as f:
             pass
             logging.info(f"Created the empty file : {file_name}")
 

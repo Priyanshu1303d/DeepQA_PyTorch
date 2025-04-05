@@ -1,9 +1,11 @@
-from src.DeepQA.logging import logger
-from DeepQA.config.configuration import ConfigurationManager
-from DeepQA.Components.Stage_04_Model_Trainer import ModelTrainer
 from torch.utils.data import DataLoader
 
+from DeepQA.Components.Stage_04_Model_Trainer import ModelTrainer
+from DeepQA.config.configuration import ConfigurationManager
+from src.DeepQA.logging import logger
+
 STAGE_NAME = "Model Training stage"
+
 
 class ModelTrainerPipeline:
     def __init__(self):
@@ -14,9 +16,10 @@ class ModelTrainerPipeline:
         get_model_trainig_config = config.get_model_trainer_config()
         model_trainer = ModelTrainer(get_model_trainig_config)
         dataset = model_trainer.create_dataset()
-        train_loader = DataLoader(dataset , batch_size= 1, shuffle=True,  pin_memory=True)
+        train_loader = DataLoader(dataset, batch_size=1, shuffle=True, pin_memory=True)
         model_trainer.train(train_loader)
         model_trainer.evaluate(train_loader)
+
 
 if __name__ == "__main__":
     try:

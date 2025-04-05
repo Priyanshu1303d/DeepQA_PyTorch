@@ -1,17 +1,20 @@
+import os
 
-import os 
 from DeepQA.config.configuration import DataValidationConfig
+
 
 class DataValidation:
 
-    def __init__(self , config = DataValidationConfig):
+    def __init__(self, config=DataValidationConfig):
         self.config = config
-    
-    def validate_all_files_exist(self) -> bool :
-        try:
-            validation_status= None
 
-            all_files = os.listdir(os.path.join("artifacts", "data_ingestion","Dataset"))
+    def validate_all_files_exist(self) -> bool:
+        try:
+            validation_status = None
+
+            all_files = os.listdir(
+                os.path.join("artifacts", "data_ingestion", "Dataset")
+            )
 
             for csv_file in all_files:
                 if csv_file not in self.config.ALL_REQUIRED_FILES:
@@ -21,7 +24,7 @@ class DataValidation:
 
                 else:
                     validation_status = True
-                    with open(self.config.STATUS_FILE ,"w") as f:
+                    with open(self.config.STATUS_FILE, "w") as f:
                         f.write(f"Validation status ----> {validation_status}")
 
             return validation_status

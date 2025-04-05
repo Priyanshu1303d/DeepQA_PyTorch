@@ -1,8 +1,9 @@
-from src.DeepQA.logging import logger
-from DeepQA.config.configuration import ConfigurationManager
 from DeepQA.Components.Stage_05_Model_Evaluation import ModelEvaluation
+from DeepQA.config.configuration import ConfigurationManager
+from src.DeepQA.logging import logger
 
 STAGE_NAME = "Model Evaluation stage"
+
 
 class ModelEvaluationPipeline:
     def __init__(self):
@@ -12,10 +13,11 @@ class ModelEvaluationPipeline:
         config = ConfigurationManager()
         get_model_evaluation_config = config.get_model_evaluation_config()
         model_evaluation = ModelEvaluation(get_model_evaluation_config)
-        
-        accuracy , f1 = model_evaluation.evaluate_model()
-        print(f1 ," " ,accuracy)
+
+        accuracy, f1 = model_evaluation.evaluate_model()
+        print(f1, " ", accuracy)
         model_evaluation.save_metrics(accuracy, f1)
+
 
 if __name__ == "__main__":
     try:

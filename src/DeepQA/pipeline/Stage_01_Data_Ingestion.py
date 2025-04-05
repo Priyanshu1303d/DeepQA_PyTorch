@@ -1,8 +1,9 @@
-from src.DeepQA.logging import logger
-from DeepQA.config.configuration import ConfigurationManager
 from DeepQA.Components.Stage_01_Data_Ingestion import DataIngestion
+from DeepQA.config.configuration import ConfigurationManager
+from src.DeepQA.logging import logger
 
 STAGE_NAME = "Data Ingestion stage"
+
 
 class DataIngestionPipeline:
     def __init__(self):
@@ -14,6 +15,7 @@ class DataIngestionPipeline:
         data_ingestion = DataIngestion(data_ingestion_config)
         data_ingestion.download_file()
         data_ingestion.extract_zip_file()
+
 
 if __name__ == "__main__":
     try:

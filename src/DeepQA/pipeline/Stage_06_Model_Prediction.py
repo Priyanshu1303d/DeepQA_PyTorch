@@ -1,8 +1,9 @@
-from src.DeepQA.logging import logger
-from DeepQA.config.configuration import ConfigurationManager
 from DeepQA.Components.Stage_06_Model_Prediction import Predictor
+from DeepQA.config.configuration import ConfigurationManager
+from src.DeepQA.logging import logger
 
 STAGE_NAME = "Model Prediction stage"
+
 
 class ModelPredictionPipeline:
     def __init__(self):
@@ -10,10 +11,11 @@ class ModelPredictionPipeline:
 
     def main(self):
         config = ConfigurationManager()
-        get_model_prediction_config  = config.get_model_prediction_config()
+        get_model_prediction_config = config.get_model_prediction_config()
         model_prediction = Predictor(get_model_prediction_config)
         answer = model_prediction.predict("Which ocean is the largest?")
-        print(f"The answer is : ",answer)
+        print(f"The answer is : ", answer)
+
 
 if __name__ == "__main__":
     try:

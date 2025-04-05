@@ -1,11 +1,13 @@
+import os
+import sys
+
 import streamlit as st
 import torch
 
-import sys
-import os
 sys.path.append(os.path.abspath("src"))
-from DeepQA.config.configuration import ConfigurationManager
 from DeepQA.Components.Stage_06_Model_Prediction import Predictor
+from DeepQA.config.configuration import ConfigurationManager
+
 # ----------------------------------------
 # 🔧 App config
 # ----------------------------------------
@@ -26,7 +28,8 @@ if page == "🏠 Home":
     st.markdown("---")
 
     st.header("📌 Project Goal")
-    st.write("""
+    st.write(
+        """
     DeepQA is an end-to-end **Question Answering (QA)** system built using PyTorch. It processes natural language questions 
     and predicts the most likely answer word using Recurrent Neural Networks.
 
@@ -35,10 +38,12 @@ if page == "🏠 Home":
     - ✅ MLflow (optional)
     - ✅ Dockerized pipeline
     - ✅ Modular configuration with YAML
-    """)
+    """
+    )
 
     st.header("⚙️ Architecture")
-    st.write("""
+    st.write(
+        """
     The pipeline includes the following stages:
 
     1. **Data Ingestion**: Loads raw QA pairs  
@@ -47,18 +52,22 @@ if page == "🏠 Home":
     4. **Model Training**: Trains RNN on the input sequences  
     5. **Model Evaluation**: Evaluates model on test set  
     6. **Model Prediction**: Loads model and vocab to predict answers for new questions
-    """)
-
+    """
+    )
 
     st.header("🚀 How to Use")
-    st.markdown("""
+    st.markdown(
+        """
     1. Go to the **Predict** page from the sidebar  
     2. Select a model (e.g. RNN)  
     3. Enter your question  
     4. Get an instant answer!
-    """)
+    """
+    )
 
-    st.info("Model currently supports one-word answer predictions. More advanced decoding will be added later.")
+    st.info(
+        "Model currently supports one-word answer predictions. More advanced decoding will be added later."
+    )
 
 
 # ================================================================
