@@ -2,6 +2,8 @@
 
 A PyTorch implementation of a Question Answering (QA) system using Recurrent Neural Networks (RNN). This project is modular, experiment-tracked, and follows best MLOps practices with DVC, MLflow, and Docker integration.
 
+**Live Demo:** [https://questionanswer01.streamlit.app/](https://questionanswer01.streamlit.app/)
+
 ---
 
 ## 📌 Features
@@ -13,6 +15,7 @@ A PyTorch implementation of a Question Answering (QA) system using Recurrent Neu
 - 🐳 Containerized environment via **Docker**
 - ⚙️ Modular code structure with components and pipelines
 - 🔄 CI/CD ready with GitHub Workflows
+- 🌐 Web interface deployed with Streamlit
 
 ---
 
@@ -96,7 +99,7 @@ DeepQA_PyTorch/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/DeepQA_PyTorch.git
+git clone https://github.com/Priyanshu1303d/DeepQA_PyTorch.git
 cd DeepQA_PyTorch
 ```
 
@@ -137,15 +140,17 @@ This project implements a complete MLOps pipeline for question answering:
 5. **Model Evaluation**: Evaluating model performance
 6. **Model Prediction**: Generating predictions from the trained model
 
-## 📊 Web Application
+## 🌐 Web Application
 
-Run the web application:
+### Local Development
+Run the web application locally:
 
 ```bash
-python app.py
+streamlit run app.py
 ```
 
-Then access it at http://localhost:5000
+### Live Demo
+Access the deployed application at: [https://questionanswer01.streamlit.app/](https://questionanswer01.streamlit.app/)
 
 ## 🧪 Development
 
